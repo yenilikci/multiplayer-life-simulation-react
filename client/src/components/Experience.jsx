@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { charactersAtom, socket } from "./SocketManager";
 import * as THREE from "three";
 import { useState } from "react";
+import { Item } from "./Item";
 
 export const Experience = () => {
 
@@ -17,6 +18,10 @@ export const Experience = () => {
             <ambientLight intensity={0.3} />
             <ContactShadows blur={2} />
             <OrbitControls />
+            <Item name={"Chair"} />
+            <Item name={"Couch Small"} />
+            <Item name={"Step Cubby Storage"} />
+            <Item name={"Table"} />
             <mesh rotation-x={-Math.PI / 2} position-y={-0.001}
                 onClick={(e) => socket.emit("move", [e.point.x, 0, e.point.z])}
                 onPointerEnter={() => setOnFloor(true)}
