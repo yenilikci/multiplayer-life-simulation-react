@@ -34,7 +34,12 @@ const map = {
     items: [
         {
             ...items.chair,
-            gridPosition: [0, 0]
+            gridPosition: [4, 4]
+        },
+        {
+            ...items.chair,
+            gridPosition: [4, 6],
+            rotation: 2
         }
     ]
 };

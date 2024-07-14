@@ -1,7 +1,7 @@
 import { ContactShadows, Environment, OrbitControls, useCursor } from "@react-three/drei";
 import { AnimatedWoman } from "./AnimatedWoman";
 import { useAtom } from "jotai";
-import { charactersAtom, socket } from "./SocketManager";
+import { charactersAtom, mapAtom, socket } from "./SocketManager";
 import * as THREE from "three";
 import { useState } from "react";
 import { Item } from "./Item";
@@ -9,6 +9,7 @@ import { Item } from "./Item";
 export const Experience = () => {
 
     const [characters] = useAtom(charactersAtom);
+    const [map] = useAtom(mapAtom);
     const [onFloor, setOnFloor] = useState(false);
     useCursor(onFloor);
 
@@ -18,16 +19,20 @@ export const Experience = () => {
             <ambientLight intensity={0.3} />
             <ContactShadows blur={2} />
             <OrbitControls />
-            <Item name={"Chair"} />
-            <Item name={"Couch Small"} />
-            <Item name={"Step Cubby Storage"} />
-            <Item name={"Table"} />
-            <mesh rotation-x={-Math.PI / 2} position-y={-0.001}
+
+            {map.items.map((item, idx) => (
+                <Item key={`${item.name}-${idx}`} item={item} />
+            ))}
+            <mesh
+                rotation-x={-Math.PI / 2}
+                position-y={-0.001}
                 onClick={(e) => socket.emit("move", [e.point.x, 0, e.point.z])}
                 onPointerEnter={() => setOnFloor(true)}
                 onPointerLeave={() => setOnFloor(false)}
+                position-x={map.size[0] / 2}
+                position-z={map.size[1] / 2}
             >
-                <planeGeometry args={[10, 10]} />
+                <planeGeometry args={map.size} />
                 <meshStandardMaterial color="#f0f0f0" />
             </mesh>
             {
