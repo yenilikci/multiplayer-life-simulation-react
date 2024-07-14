@@ -39,6 +39,7 @@ export const Experience = () => {
                 characters.map((character) => (
                     <AnimatedWoman
                         key={character.id}
+                        id={character.id}
                         position={new THREE.Vector3(character.position[0], character.position[1], character.position[2])}
                         hairColor={character.hairColor}
                         topColor={character.topColor}
